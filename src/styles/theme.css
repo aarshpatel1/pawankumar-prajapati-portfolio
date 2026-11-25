@@ -1,0 +1,304 @@
+@import "tailwindcss";
+@import "./variables.css";
+
+@theme {
+  /* Colors */
+  --color-warm-paper: #f5f5f3;
+  --color-ink-black: #000000;
+  --color-charcoal: #333333;
+  --color-pure-white: #ffffff;
+  --color-dusty-sky: #81aed9;
+  --color-cobalt-wash: #55a1ea;
+  --color-coral-link: #ff8562;
+
+  /* Typography */
+  --font-times: 'Times', 'Times New Roman', serif;
+  --font-simeiz: 'Simeiz', 'Cormorant Garamond', 'Playfair Display', 'Times', serif;
+  --font-manrope: 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-suisse-intl: 'Suisse Intl', 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.2;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.2;
+  --text-body: 16px;
+  --leading-body: 1.56;
+  --text-body-lg: 18px;
+  --leading-body-lg: 1.55;
+  --text-subheading: 24px;
+  --leading-subheading: 1.35;
+  --text-heading-sm: 30px;
+  --leading-heading-sm: 1.33;
+  --text-heading: 48px;
+  --leading-heading: 1;
+  --text-display: 80px;
+  --leading-display: 1;
+  --tracking-display: 0px;
+
+  /* Spacing */
+  --spacing-5: 5px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-15: 15px;
+  --spacing-20: 20px;
+  --spacing-22: 22px;
+  --spacing-48: 48px;
+
+  /* Border Radius */
+  --radius-sm: 1.5px;
+  --radius-2xl: 20px;
+  --radius-3xl: 30px;
+  --radius-full: 50px;
+  --radius-full-2: 91px;
+  --radius-full-3: 100px;
+  --radius-full-4: 120px;
+  --radius-full-5: 1000px;
+  --radius-full-6: 3000px;
+  --radius-full-7: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: rgb(51, 51, 51) 5px -5px 0px 0px;
+  --shadow-subtle-2: rgb(51, 51, 51) 4px -4px 0px 0px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-warm-paper);
+    color: var(--color-ink-black);
+    font-family: var(--font-manrope);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-warm-paper);
+    color: var(--color-ink-black);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-dusty-sky);
+    color: var(--color-ink-black);
+  }
+}
+
+/* Editorial Sketchbook Typography Utilities */
+.font-editorial {
+  font-family: var(--font-simeiz);
+  font-weight: 300;
+  letter-spacing: var(--tracking-display);
+}
+
+.font-editorial-italic {
+  font-family: var(--font-simeiz);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.font-functional,
+.font-ui {
+  font-family: var(--font-manrope);
+  letter-spacing: -0.036em;
+}
+
+/* Italic inside .font-editorial automatically uses Simeiz italic 400 */
+.font-editorial em,
+.font-editorial-italic {
+  font-family: var(--font-simeiz);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Pasted-Paper Hard Offset Card */
+.sketch-card {
+  background-color: var(--color-pure-white);
+  border: 1.5px solid var(--color-dusty-sky);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-subtle);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.sketch-card:hover {
+  border-color: var(--color-cobalt-wash);
+}
+
+.sketch-card-interactive:hover {
+  border-color: var(--color-cobalt-wash);
+  transform: translate(-2px, 2px);
+  box-shadow: rgb(51, 51, 51) 7px -7px 0px 0px;
+}
+
+.sketch-card-interactive:active {
+  transform: translate(2px, -2px);
+  box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
+}
+
+/* Empty Add-Work Sketchbook Card */
+.sketch-card-dashed,
+.sketch-slot-card {
+  background-color: var(--color-pure-white);
+  border: 1.5px dashed var(--color-dusty-sky);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-subtle);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.sketch-card-dashed:hover,
+.sketch-slot-card:hover {
+  border-color: var(--color-cobalt-wash);
+  border-style: solid;
+  transform: translate(-2px, 2px);
+  box-shadow: rgb(51, 51, 51) 7px -7px 0px 0px;
+}
+
+/* Pill CTA Buttons */
+.pill-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius-full-6);
+  border: 1.5px solid var(--color-ink-black);
+  background-color: var(--color-pure-white);
+  color: var(--color-ink-black);
+  font-family: var(--font-manrope);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-subtle-2);
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.pill-cta:hover {
+  border-color: var(--color-cobalt-wash);
+  transform: translate(-2px, 2px);
+  box-shadow: rgb(51, 51, 51) 6px -6px 0px 0px;
+}
+
+.pill-cta:active {
+  transform: translate(2px, -2px);
+  box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
+}
+
+/* Dusty Sky Filled Primary Pill Action (matches Agent Prompt Guide: primary action #81aed9) */
+.pill-cta-primary-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-full-6);
+  border: 1.5px solid var(--color-ink-black);
+  background-color: var(--color-dusty-sky);
+  color: var(--color-ink-black);
+  font-family: var(--font-manrope);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-subtle-2);
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.pill-cta-primary-blue:hover {
+  background-color: var(--color-cobalt-wash);
+  transform: translate(-2px, 2px);
+  box-shadow: rgb(51, 51, 51) 6px -6px 0px 0px;
+}
+
+.pill-cta-primary-blue:active {
+  transform: translate(2px, -2px);
+  box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
+}
+
+/* Secondary Pill (filters, tags, compact triggers) */
+.sketch-pill,
+.pill-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-full-6);
+  border: 1.5px solid var(--color-dusty-sky);
+  background-color: var(--color-pure-white);
+  color: var(--color-ink-black);
+  font-family: var(--font-manrope);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.sketch-pill:hover,
+.pill-chip:hover {
+  border-color: var(--color-cobalt-wash);
+}
+
+.sketch-pill-active,
+.pill-chip-active {
+  border-color: var(--color-ink-black);
+  background-color: var(--color-dusty-sky);
+  box-shadow: var(--shadow-subtle-2);
+}
+
+/* Inline Coral Link — exclusively text color, never background/border */
+.coral-link,
+.coral-inline-link {
+  color: var(--color-coral-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-coral-link);
+  cursor: pointer;
+  border: 0;
+  transition: opacity 150ms ease;
+}
+
+.coral-link:hover,
+.coral-inline-link:hover {
+  opacity: 0.78;
+}
+
+/* Form Input Field Token (no visible focus ring change per DESIGN.md) */
+.sketch-input {
+  width: 100%;
+  border-radius: var(--radius-inputs);
+  border: 1.5px solid var(--color-dusty-sky);
+  background-color: var(--color-pure-white);
+  padding: 14px 20px;
+  font-family: var(--font-manrope);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--color-ink-black);
+  outline: none;
+}
+
+.sketch-input::placeholder {
+  color: var(--color-muted-placeholder);
+}
+
+.sketch-input:focus {
+  outline: none;
+}
+
+/* Muted Analog Desaturated Treatment for Portfolio Imagery */
+.thumb-analog,
+.sketch-photo-muted {
+  filter: grayscale(82%) contrast(1.04) brightness(1.02);
+  transition: filter 260ms ease, transform 320ms ease;
+}
+
+.sketch-card-interactive:hover .thumb-analog,
+.sketch-card-interactive:hover .sketch-photo-muted {
+  filter: grayscale(28%) contrast(1.05);
+}
