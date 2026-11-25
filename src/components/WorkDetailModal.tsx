@@ -36,7 +36,7 @@ export const WorkDetailModal: React.FC<WorkDetailModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="sketch-card relative my-auto max-h-[90vh] w-full max-w-[820px] overflow-y-auto p-7 sm:p-[48px]"
+        className="sketch-card animate-modal-enter relative my-auto max-h-[90vh] w-full max-w-[820px] overflow-y-auto p-7 sm:p-[48px]"
       >
         {/* Top Meta Bar */}
         <div className="flex items-start justify-between gap-4">

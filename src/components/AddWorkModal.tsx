@@ -5,6 +5,7 @@ import { compressImageFile } from '../utils/workStorage';
 interface AddWorkModalProps {
   isOpen: boolean;
   editingWork: PortfolioWork | null;
+  prefillImageUrl?: string;
   allWorks: PortfolioWork[];
   onClose: () => void;
   onSave: (work: PortfolioWork, isEdit: boolean) => void;
@@ -16,6 +17,7 @@ const FALLBACK_IMAGE = '/images/work-01-kaveri.jpg';
 export const AddWorkModal: React.FC<AddWorkModalProps> = ({
   isOpen,
   editingWork,
+  prefillImageUrl,
   allWorks,
   onClose,
   onSave,
@@ -67,15 +69,15 @@ export const AddWorkModal: React.FC<AddWorkModalProps> = ({
       setSummary('');
       setStory('');
       setDeliverablesText('Visual Identity, Typography, Print Production');
-      setImageUrl('');
+      setImageUrl(prefillImageUrl || '');
       setExternalLink('');
       setAwardBadge(true);
       setAwardLabel('Featured Work');
       setKeepColorInPreview(false);
     }
-    setUploadStatus('');
+    setUploadStatus(prefillImageUrl ? 'Loaded dropped artwork image!' : '');
     setCopied(false);
-  }, [isOpen, editingWork]);
+  }, [isOpen, editingWork, prefillImageUrl]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -159,7 +161,7 @@ export const AddWorkModal: React.FC<AddWorkModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="sketch-card relative my-auto max-h-[92vh] w-full max-w-[780px] overflow-y-auto p-7 sm:p-[48px]"
+        className="sketch-card animate-modal-enter relative my-auto max-h-[92vh] w-full max-w-[780px] overflow-y-auto p-7 sm:p-[48px]"
       >
         <div className="flex items-start justify-between gap-4">
           <div>

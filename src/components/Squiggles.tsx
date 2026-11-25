@@ -2,6 +2,7 @@ import React from 'react';
 
 interface SquiggleProps {
   className?: string;
+  active?: boolean;
 }
 
 /**
@@ -64,23 +65,30 @@ export const EditorialParens: React.FC<EditorialParensProps> = ({
 };
 
 /**
- * Continuous hero thread entering from the top edge, looping through scattered lines,
- * passing behind the SEE PORTFOLIO button, and looping toward Section 01.
+ * Carefully routed continuous hero rope/thread:
+ * - Enters top-center in the open gap between "Hey there!" and "I'm Pawankumar."
+ * - Sweeps into the open left pocket beside "Two years shaping brands" with a light loop
+ * - Glides cleanly across the middle gutter between "to appear" and the parentheses
+ * - Descends through the negative space between "in print & life" and "as unique"
+ * - Passes behind the SEE PORTFOLIO button and loops neatly into Section 01.
  */
 export const HeroContinuousThread: React.FC<SquiggleProps> = ({ className = '' }) => (
   <svg
-    viewBox="0 0 560 760"
+    viewBox="0 0 1040 760"
     fill="none"
     preserveAspectRatio="none"
     aria-hidden="true"
     className={`pointer-events-none select-none ${className}`}
   >
     <path
-      d="M 330 0 C 350 75, 360 155, 290 198 C 232 234, 156 196, 174 176 C 194 156, 266 192, 240 264 C 216 330, 148 344, 184 416 C 216 480, 266 510, 262 608 C 258 672, 246 708, 286 710 C 316 712, 314 684, 276 686 C 228 688, 236 734, 342 758"
+      pathLength={1}
+      d="M 416 0 C 424 72, 412 134, 344 164 C 282 190, 212 152, 236 132 C 260 112, 316 156, 294 214 C 274 268, 466 258, 496 312 C 526 368, 452 394, 434 454 C 418 508, 444 574, 442 642 C 440 690, 414 714, 456 718 C 492 722, 494 690, 448 692 C 402 694, 414 736, 512 760"
       stroke="#000000"
+      strokeOpacity="0.68"
       strokeWidth="1.35"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="thread-draw-on-load"
     />
   </svg>
 );
@@ -88,7 +96,10 @@ export const HeroContinuousThread: React.FC<SquiggleProps> = ({ className = '' }
 /**
  * Gallery continuous thread weaving between staggered cards with a delicate loop.
  */
-export const GalleryContinuousThread: React.FC<SquiggleProps> = ({ className = '' }) => (
+export const GalleryContinuousThread: React.FC<SquiggleProps> = ({
+  className = '',
+  active = false,
+}) => (
   <svg
     viewBox="0 0 720 960"
     fill="none"
@@ -96,11 +107,14 @@ export const GalleryContinuousThread: React.FC<SquiggleProps> = ({ className = '
     className={`pointer-events-none select-none ${className}`}
   >
     <path
+      pathLength={1}
       d="M 380 12 C 420 92, 464 152, 408 188 C 352 224, 304 242, 286 286 C 266 334, 356 346, 368 408 C 378 460, 324 446, 336 420 C 348 394, 412 456, 474 492 C 534 528, 398 632, 326 672 C 264 706, 206 756, 256 802 C 294 838, 312 812, 284 794 C 242 768, 268 886, 310 952"
       stroke="#000000"
+      strokeOpacity="0.72"
       strokeWidth="1.35"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={`thread-draw-scroll ${active ? 'thread-draw-scroll-active' : ''}`}
     />
   </svg>
 );
@@ -108,7 +122,10 @@ export const GalleryContinuousThread: React.FC<SquiggleProps> = ({ className = '
 /**
  * White continuous thread sweeping through the Cobalt-Blue Section 02.
  */
-export const BlueSectionWhiteThread: React.FC<SquiggleProps> = ({ className = '' }) => (
+export const BlueSectionWhiteThread: React.FC<SquiggleProps> = ({
+  className = '',
+  active = false,
+}) => (
   <svg
     viewBox="0 0 540 580"
     fill="none"
@@ -116,11 +133,14 @@ export const BlueSectionWhiteThread: React.FC<SquiggleProps> = ({ className = ''
     className={`pointer-events-none select-none ${className}`}
   >
     <path
+      pathLength={1}
       d="M 290 0 C 376 62, 402 152, 340 198 C 276 244, 210 248, 218 326 C 224 388, 178 404, 152 380 C 128 358, 166 330, 198 358 C 234 390, 146 476, 38 576"
       stroke="#ffffff"
+      strokeOpacity="0.88"
       strokeWidth="1.35"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={`thread-draw-scroll ${active ? 'thread-draw-scroll-active' : ''}`}
     />
   </svg>
 );

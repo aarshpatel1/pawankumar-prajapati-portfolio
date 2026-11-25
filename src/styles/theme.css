@@ -99,13 +99,21 @@
   letter-spacing: -0.036em;
 }
 
+/* Crisp warm-paper halo so overlapping ink lines never hurt serif legibility */
+.hero-type-halo {
+  text-shadow:
+    0 0 10px #f5f5f3,
+    0 0 22px #f5f5f3,
+    0 0 4px #f5f5f3;
+}
+
 /* Reference-accurate Dusty-Sky Offset Hard-Shadow Cards */
 .sketch-card {
   background-color: #fbfbf9;
   border: 1.5px solid var(--color-dusty-sky);
   border-radius: 26px;
   box-shadow: var(--shadow-blue-offset);
-  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .sketch-card:hover {
@@ -114,7 +122,7 @@
 
 .sketch-card-interactive:hover {
   border-color: var(--color-cobalt-wash);
-  transform: translate(-2px, 2px);
+  transform: translate(-3px, 3px);
   box-shadow: var(--shadow-blue-offset-hover);
 }
 
@@ -130,13 +138,13 @@
   border: 1.5px solid var(--color-dusty-sky);
   border-radius: 26px;
   box-shadow: var(--shadow-blue-offset);
-  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms ease;
 }
 
 .sketch-card-dashed:hover,
 .sketch-slot-card:hover {
   border-color: var(--color-cobalt-wash);
-  transform: translate(-2px, 2px);
+  transform: translate(-3px, 3px);
   box-shadow: var(--shadow-blue-offset-hover);
 }
 
@@ -158,7 +166,7 @@
   text-transform: uppercase;
   box-shadow: var(--shadow-blue-offset);
   cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  transition: border-color 160ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 160ms ease;
 }
 
 .pill-cta:hover {
@@ -173,7 +181,7 @@
   box-shadow: rgb(129, 174, 217) 2px -2px 0px 0px;
 }
 
-/* Circular Dark-Shadow Icon Trigger (Hamburger + Bottom-Left Social/Add Buttons in Ref Images 1-5) */
+/* Circular Dark-Shadow Icon Trigger (Hamburger + Bottom-Left Social/Add Buttons) */
 .circle-ink-btn {
   display: inline-flex;
   align-items: center;
@@ -184,7 +192,7 @@
   color: var(--color-ink-black);
   box-shadow: var(--shadow-subtle-2);
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 160ms ease;
 }
 
 .circle-ink-btn:hover {
@@ -222,6 +230,7 @@
 .sketch-pill:hover,
 .pill-chip:hover {
   border-color: var(--color-cobalt-wash);
+  transform: translateY(-1px);
 }
 
 .sketch-pill-active,
@@ -262,6 +271,7 @@
   line-height: 1.45;
   color: var(--color-ink-black);
   outline: none;
+  transition: border-color 180ms ease;
 }
 
 .sketch-input::placeholder {
@@ -269,6 +279,7 @@
 }
 
 .sketch-input:focus {
+  border-color: var(--color-cobalt-wash);
   outline: none;
 }
 
@@ -276,10 +287,128 @@
 .thumb-analog,
 .sketch-photo-muted {
   filter: grayscale(82%) contrast(1.04) brightness(1.02);
-  transition: filter 260ms ease, transform 320ms ease;
+  transition: filter 320ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .sketch-card-interactive:hover .thumb-analog,
 .sketch-card-interactive:hover .sketch-photo-muted {
-  filter: grayscale(20%) contrast(1.05);
+  filter: grayscale(10%) contrast(1.05);
+  transform: scale(1.04);
+}
+
+/* =========================================================
+ * ON-LOAD & ON-SCROLL MOTION SYSTEM
+ * ========================================================= */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroPop {
+  from {
+    opacity: 0;
+    transform: scale(0.84) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes drawThreadPath {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-hero-rise {
+  opacity: 0;
+  animation: heroRise 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-hero-pop {
+  opacity: 0;
+  animation: heroPop 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-modal-enter {
+  animation: modalEnter 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.thread-draw-on-load {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawThreadPath 1.85s cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+}
+
+.thread-draw-scroll {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.thread-draw-scroll-active {
+  stroke-dashoffset: 0;
+}
+
+/* On-Scroll Reveal Classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-hero-rise,
+  .animate-hero-pop,
+  .animate-modal-enter,
+  .thread-draw-on-load {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .thread-draw-scroll {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
 }

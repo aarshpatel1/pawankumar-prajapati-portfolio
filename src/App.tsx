@@ -8,6 +8,7 @@ import {
   saveStoredWorks,
 } from './utils/workStorage';
 import { NavigationOverlay } from './components/NavigationOverlay';
+import { SectionProgressRail } from './components/SectionProgressRail';
 import { HeroSection } from './components/HeroSection';
 import { PortfolioSection } from './components/PortfolioSection';
 import { ExperienceSection } from './components/ExperienceSection';
@@ -23,6 +24,7 @@ export function App() {
   const [selectedWork, setSelectedWork] = useState<PortfolioWork | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingWork, setEditingWork] = useState<PortfolioWork | null>(null);
+  const [prefillImageUrl, setPrefillImageUrl] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const hasCustomEdits = JSON.stringify(works) !== JSON.stringify(DUMMY_WORKS);
@@ -35,13 +37,15 @@ export function App() {
 
   const showToast = (msg: string) => setToastMessage(msg);
 
-  const handleOpenAddNew = () => {
+  const handleOpenAddNew = (droppedImageUrl?: string) => {
     setEditingWork(null);
+    setPrefillImageUrl(typeof droppedImageUrl === 'string' ? droppedImageUrl : '');
     setAddModalOpen(true);
   };
 
   const handleOpenEdit = (work: PortfolioWork) => {
     setEditingWork(work);
+    setPrefillImageUrl('');
     setAddModalOpen(true);
   };
 
@@ -82,18 +86,20 @@ export function App() {
     : '01';
 
   return (
-    /* Signature Dusty-Sky Outer Page Frame matching Reference Images 1-5 */
+    /* Equal-gap Dusty-Sky Outer Frame across all viewports (top, bottom, left, right match) */
     <div className="min-h-screen bg-dusty-sky p-2 sm:p-3.5 md:p-4 text-black">
-      <div className="relative mx-auto max-w-[1380px] overflow-hidden rounded-[22px] bg-warm-paper sm:rounded-[30px]">
+      <div className="relative w-full overflow-hidden rounded-[22px] bg-warm-paper sm:rounded-[30px]">
         <NavigationOverlay
           isOpen={menuOpen}
           onToggle={() => setMenuOpen((prev) => !prev)}
           onClose={() => setMenuOpen(false)}
-          onOpenAddWork={handleOpenAddNew}
+          onOpenAddWork={() => handleOpenAddNew()}
         />
 
+        <SectionProgressRail />
+
         <main>
-          <HeroSection onOpenAddWork={handleOpenAddNew} />
+          <HeroSection onOpenAddWork={() => handleOpenAddNew()} />
 
           <PortfolioSection
             works={works}
@@ -105,14 +111,14 @@ export function App() {
             onResetDefaults={handleResetDefaults}
           />
 
-          <ExperienceSection onOpenAddWork={handleOpenAddNew} />
+          <ExperienceSection onOpenAddWork={() => handleOpenAddNew()} />
 
-          <PrinciplesSection onOpenAddWork={handleOpenAddNew} />
+          <PrinciplesSection onOpenAddWork={() => handleOpenAddNew()} />
 
           <ContactSection />
         </main>
 
-        <Footer onOpenAddWork={handleOpenAddNew} />
+        <Footer onOpenAddWork={() => handleOpenAddNew()} />
       </div>
 
       <WorkDetailModal
@@ -126,10 +132,12 @@ export function App() {
       <AddWorkModal
         isOpen={addModalOpen}
         editingWork={editingWork}
+        prefillImageUrl={prefillImageUrl}
         allWorks={works}
         onClose={() => {
           setAddModalOpen(false);
           setEditingWork(null);
+          setPrefillImageUrl('');
         }}
         onSave={handleSaveWork}
         onExportJson={() => formatWorksAsJsonDownload(works)}
@@ -139,7 +147,7 @@ export function App() {
         <div
           role="status"
           aria-live="polite"
-          className="sketch-card fixed right-6 bottom-6 z-50 px-6 py-3.5 font-ui text-[14px] text-black"
+          className="sketch-card animate-modal-enter fixed right-6 bottom-6 z-50 px-6 py-3.5 font-ui text-[14px] text-black"
         >
           {toastMessage}
         </div>

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { DESIGNER_PROFILE } from '../data/works';
+import { useInView } from '../hooks/useInView';
 import { WORK_CATEGORIES, type PortfolioWork, type WorkCategory } from '../types/work';
 import { WorkCard } from './WorkCard';
 import { AddWorkSlotCard } from './AddWorkSlotCard';
@@ -10,7 +11,7 @@ interface PortfolioSectionProps {
   hasCustomEdits: boolean;
   onSelectWork: (work: PortfolioWork) => void;
   onEditWork: (work: PortfolioWork) => void;
-  onOpenAddWork: () => void;
+  onOpenAddWork: (prefillImageUrl?: string) => void;
   onExportJson: () => void;
   onResetDefaults: () => void;
 }
@@ -25,11 +26,23 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   onResetDefaults,
 }) => {
   const [activeCategory, setActiveCategory] = useState<'All' | WorkCategory>('All');
+  const { ref: headerRef, isVisible: headerVisible } = useInView<HTMLDivElement>();
+  const { ref: galleryRef, isVisible: galleryVisible } = useInView<HTMLDivElement>({
+    threshold: 0.04,
+  });
 
   const filteredWorks = useMemo(() => {
     if (activeCategory === 'All') return works;
     return works.filter((w) => w.category === activeCategory);
   }, [works, activeCategory]);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: works.length };
+    for (const cat of WORK_CATEGORIES) {
+      counts[cat] = works.filter((w) => w.category === cat).length;
+    }
+    return counts;
+  }, [works]);
 
   const nextSlotNumber = `${String(works.length + 1).padStart(2, '0')}+`;
 
@@ -52,8 +65,11 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
       id="work"
       className="relative mx-auto max-w-[1180px] px-6 pt-16 pb-20 sm:px-10 md:pt-24 md:pb-24"
     >
-      {/* Scattered Header matching Reference Image 2 */}
-      <div className="relative">
+      {/* Scattered Header with On-Scroll Reveal */}
+      <div
+        ref={headerRef}
+        className={`relative scroll-reveal ${headerVisible ? 'scroll-reveal-visible' : ''}`}
+      >
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-start gap-6 sm:gap-12">
             <span className="font-editorial pt-3 text-[18px] text-charcoal">
@@ -79,7 +95,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           </div>
         </div>
 
-        {/* Filter Pills + Manage / Add Work Bar */}
+        {/* Filter Pills with Counts + Manage / Add Work Bar */}
         <div className="mt-10 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 md:flex-row md:items-center">
           <div
             role="tablist"
@@ -97,7 +113,8 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                   onClick={() => setActiveCategory(category)}
                   className={`pill-chip ${active ? 'pill-chip-active' : ''}`}
                 >
-                  {category}
+                  <span>{category}</span>
+                  <span className="text-[11px] opacity-60">({categoryCounts[category]})</span>
                 </button>
               );
             })}
@@ -106,7 +123,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={onOpenAddWork}
+              onClick={() => onOpenAddWork()}
               className="pill-cta px-5 py-2.5 text-[12px]"
             >
               + ADD WORK
@@ -132,9 +149,12 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
         </div>
       </div>
 
-      {/* Staggered Asymmetric Varying-Size Gallery + Continuous Hand-Drawn Thread */}
-      <div className="relative mt-14 sm:mt-16">
-        <GalleryContinuousThread className="pointer-events-none absolute top-0 left-1/2 hidden h-full w-[680px] -translate-x-1/2 opacity-90 md:block" />
+      {/* Staggered Asymmetric Varying-Size Gallery + Scroll-Animated Thread */}
+      <div ref={galleryRef} className="relative mt-14 sm:mt-16">
+        <GalleryContinuousThread
+          active={galleryVisible}
+          className="pointer-events-none absolute top-0 left-1/2 hidden h-full w-[680px] -translate-x-1/2 opacity-90 md:block"
+        />
 
         <div className="relative z-10 grid grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-x-10 md:gap-y-16">
           {filteredWorks.map((work, idx) => {
@@ -142,25 +162,44 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
             const indexNumber = String((globalIndex >= 0 ? globalIndex : idx) + 1).padStart(2, '0');
             const { variant, staggerClass } = getLayoutMeta(idx);
             return (
-              <WorkCard
+              <div
                 key={work.id}
-                work={work}
-                indexNumber={indexNumber}
-                variant={variant}
-                staggerClass={staggerClass}
-                onSelect={onSelectWork}
-                onEdit={onEditWork}
-              />
+                style={{ transitionDelay: `${Math.min(idx * 90, 320)}ms` }}
+                className={`${staggerClass} scroll-reveal ${
+                  galleryVisible ? 'scroll-reveal-visible' : ''
+                }`}
+              >
+                <WorkCard
+                  work={work}
+                  indexNumber={indexNumber}
+                  variant={variant}
+                  onSelect={onSelectWork}
+                  onEdit={onEditWork}
+                />
+              </div>
             );
           })}
 
-          {/* Open Folio Slot Card to Add Pawankumar's Real Work */}
-          <div className="md:col-span-5 md:mt-10">
-            <AddWorkSlotCard nextIndex={nextSlotNumber} onAddClick={onOpenAddWork} />
+          {/* Open Folio Slot Card (supports click OR image drag-and-drop) */}
+          <div
+            style={{ transitionDelay: `${Math.min(filteredWorks.length * 90, 360)}ms` }}
+            className={`md:col-span-5 md:mt-10 scroll-reveal ${
+              galleryVisible ? 'scroll-reveal-visible' : ''
+            }`}
+          >
+            <AddWorkSlotCard
+              nextIndex={nextSlotNumber}
+              onAddClick={() => onOpenAddWork()}
+              onDropImage={(dataUrl) => onOpenAddWork(dataUrl)}
+            />
           </div>
 
-          {/* Bottom-Left Social & Quick-Add Overlapping Circles matching Reference Image 3 */}
-          <div className="md:col-span-7 md:self-end md:pb-6">
+          {/* Bottom-Left Overlapping Social & Quick-Add Circles */}
+          <div
+            className={`md:col-span-7 md:self-end md:pb-6 scroll-reveal ${
+              galleryVisible ? 'scroll-reveal-visible' : ''
+            }`}
+          >
             <div className="inline-flex flex-col items-start gap-4">
               <p className="font-ui text-[13px] leading-[1.4] text-charcoal">
                 You can add new work or see
@@ -171,7 +210,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
               <div className="flex items-center -space-x-2">
                 <button
                   type="button"
-                  onClick={onOpenAddWork}
+                  onClick={() => onOpenAddWork()}
                   title="Add new graphic design work"
                   aria-label="Add new graphic design work"
                   className="circle-ink-btn relative z-10 h-[52px] w-[52px] font-ui text-[22px] font-normal hover:z-20"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DESIGNER_PROFILE } from '../data/works';
+import { useInView } from '../hooks/useInView';
 import { EditorialParens, FooterSignOffSquiggle } from './Squiggles';
 
 const SCOPES = [
@@ -11,6 +12,7 @@ const SCOPES = [
 ];
 
 export const ContactSection: React.FC = () => {
+  const { ref: sectionRef, isVisible } = useInView<HTMLElement>({ threshold: 0.08 });
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedScope, setSelectedScope] = useState('Brand Identity');
@@ -25,8 +27,11 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
-      className="relative mx-auto max-w-[1180px] px-6 pt-12 pb-20 sm:px-10 md:pt-16 md:pb-24"
+      className={`relative mx-auto max-w-[1180px] px-6 pt-12 pb-20 sm:px-10 md:pt-16 md:pb-24 scroll-reveal ${
+        isVisible ? 'scroll-reveal-visible' : ''
+      }`}
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-start gap-6 sm:gap-12">
