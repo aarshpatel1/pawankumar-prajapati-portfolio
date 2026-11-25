@@ -1,10 +1,15 @@
 import React from 'react';
-import { DESIGNER_PROFILE } from '../data/works';
-import { SectionFlowSquiggle } from './Squiggles';
+import { BlueSectionWhiteThread, EditorialParens } from './Squiggles';
 
 interface ExperienceSectionProps {
   onOpenAddWork: () => void;
 }
+
+const MARQUEE_CARDS = [
+  'present brands to the world beautifully',
+  'inspire tactile confidence',
+  '2 years of graphic design craft',
+];
 
 export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
   onOpenAddWork,
@@ -12,111 +17,86 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
   return (
     <section
       id="experience"
-      className="relative mx-auto max-w-[1200px] px-6 py-20 md:px-10 md:py-24"
+      className="relative mx-2 my-8 overflow-hidden rounded-[26px] bg-gradient-to-br from-[#0d488f] via-[#094183] to-[#073d7c] text-white sm:mx-4 sm:rounded-[32px]"
     >
-      <div className="relative md:pl-12">
-        <span
-          aria-hidden="true"
-          className="font-editorial mb-3 block text-[22px] leading-none text-black md:absolute md:top-2 md:left-0 md:mb-0"
-        >
-          02
-        </span>
+      {/* Seamless Cobalt Editorial Portrait on the right side matching Reference Image 4 */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] lg:block">
+        <img
+          src="/images/avatar-pawan-blue.jpg"
+          alt="Editorial studio portrait of Pawankumar Prajapati"
+          className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent_0%,black_32%,black_100%)]"
+        />
+      </div>
 
-        <h2 className="font-editorial max-w-[820px] text-[36px] leading-[1.04] text-black sm:text-[48px]">
-          <em>Two years</em> of obsessing over grid, ink &amp; <em>character.</em>
-        </h2>
+      {/* Continuous White 1.5px Thread sweeping through the blue canvas */}
+      <BlueSectionWhiteThread className="pointer-events-none absolute top-0 left-[22%] hidden h-full w-[540px] opacity-90 md:block" />
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10">
-          {/* Left Narrative & 2-Year Timeline */}
-          <div className="space-y-8 lg:col-span-6">
-            <p className="font-editorial text-[24px] leading-[1.42] text-black">
-              I’m <em>{DESIGNER_PROFILE.fullName}</em> — a graphic designer who has spent
-              the past two years turning rough notebook sketches into crisp brand systems,
-              packaging, and print publications.
-            </p>
+      <div className="relative z-10 mx-auto max-w-[1160px] px-6 pt-16 pb-12 sm:px-10 md:pt-24 md:pb-16">
+        {/* Scattered White Editorial Statement matching Reference Image 4 */}
+        <div className="flex flex-col gap-6 lg:max-w-[780px]">
+          <div className="flex items-start gap-8 sm:gap-16">
+            <span className="font-editorial pt-3 text-[18px] text-white/85">
+              02
+            </span>
 
-            <p className="font-ui text-[15px] leading-[1.6] text-charcoal">
-              (2 years of hands-on experience spanning studio collaboration and freelance
-              commissions — blending expressive typography with print-ready discipline.)
-            </p>
-
-            <div className="space-y-6 border-t border-black/15 pt-6">
-              {DESIGNER_PROFILE.timeline.map((item) => (
-                <div key={item.period} className="space-y-1.5">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <h3 className="font-editorial text-[24px] leading-[1.2] text-black">
-                      {item.title}
-                    </h3>
-                    <span className="font-ui text-[13px] text-charcoal">
-                      ({item.period})
-                    </span>
-                  </div>
-                  <p className="font-ui text-[14px] leading-[1.55] text-charcoal">
-                    {item.detail}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-1">
-              <button
-                type="button"
-                onClick={onOpenAddWork}
-                className="coral-inline-link bg-transparent p-0 font-ui text-[14px]"
-              >
-                add a recent project to showcase these 2 years →
-              </button>
-            </div>
+            <h2 className="font-editorial text-[40px] leading-[1.05] text-white sm:text-[58px] lg:text-[68px]">
+              <span className="block">I create</span>
+              <span className="mt-2 block pl-[28%] sm:pl-[44%]">
+                <em>tactile</em>
+              </span>
+            </h2>
           </div>
 
-          {/* Right Staggered White Sketchbook Capabilities Card */}
-          <div className="relative lg:col-span-6 lg:mt-8">
-            <div className="sketch-card p-7 sm:p-[48px]">
-              <p className="font-ui text-[13px] text-charcoal">
-                (Craft &amp; Services)
-              </p>
-              <h3 className="font-editorial mt-2 text-[30px] leading-[1.2] text-black">
-                What I <em>bring</em> to the table
-              </h3>
+          <div className="font-editorial text-[40px] leading-[1.06] text-white sm:text-[58px] lg:text-[68px]">
+            <span className="block sm:pl-[4%]">visuals</span>
+            <span className="mt-2 flex flex-wrap gap-x-10 sm:pl-[18%]">
+              <span>for</span>
+              <span>adventurous</span>
+            </span>
+            <span className="mt-2 block pl-[36%] sm:pl-[58%]">
+              brands
+            </span>
+          </div>
 
-              <ul className="mt-7 space-y-6">
-                {DESIGNER_PROFILE.disciplines.map((d) => (
-                  <li
-                    key={d.index}
-                    className="border-b border-dusty-sky/45 pb-5 last:border-b-0 last:pb-0"
-                  >
-                    <div className="flex items-baseline gap-4">
-                      <span className="font-editorial text-[20px] text-black">
-                        {d.index}
-                      </span>
-                      <div>
-                        <h4 className="font-editorial text-[22px] leading-[1.25] text-black">
-                          {d.title}
-                        </h4>
-                        <p className="mt-1.5 font-ui text-[14px] leading-[1.5] text-charcoal">
-                          {d.note}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+          {/* Mobile portrait display */}
+          <div className="mt-4 overflow-hidden rounded-[24px] lg:hidden">
+            <img
+              src="/images/avatar-pawan-blue.jpg"
+              alt="Editorial studio portrait of Pawankumar Prajapati"
+              className="h-[340px] w-full object-cover object-top"
+            />
+          </div>
 
-              <div className="mt-7 flex flex-wrap gap-2 pt-2">
-                {DESIGNER_PROFILE.toolkit.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded-[3000px] border-[1.5px] border-black bg-warm-paper px-3.5 py-1 font-ui text-[12px] text-black"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {/* Giant White Parentheses Note + Quick Coral Action */}
+          <div className="mt-6 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between lg:max-w-[600px]">
+            <EditorialParens light>
+              <p className="m-0">2 years of graphic design experience</p>
+              <p className="m-0">turning concepts into brands, packaging &amp; print.</p>
+            </EditorialParens>
 
-            <SectionFlowSquiggle className="pointer-events-none mt-8 hidden w-[320px] opacity-85 md:ml-auto md:block" />
+            <button
+              type="button"
+              onClick={onOpenAddWork}
+              className="coral-inline-link bg-transparent p-0 font-ui text-[13px]"
+            >
+              + add recent project
+            </button>
           </div>
         </div>
+      </div>
+
+      {/* Bottom White Rounded Pill-Top Strips peeking up like Reference Image 4 */}
+      <div className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-4 px-4 pt-4 sm:grid-cols-3 sm:px-6">
+        {MARQUEE_CARDS.map((phrase) => (
+          <div
+            key={phrase}
+            className="rounded-t-[24px] border-t border-x border-dusty-sky bg-warm-paper px-6 py-5 text-center text-black sm:py-6"
+          >
+            <p className="font-editorial text-[22px] leading-[1.18] sm:text-[26px]">
+              {phrase}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

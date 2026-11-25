@@ -9,6 +9,7 @@
   --color-pure-white: #ffffff;
   --color-dusty-sky: #81aed9;
   --color-cobalt-wash: #55a1ea;
+  --color-cobalt-deep: #1e56a8;
   --color-coral-link: #ff8562;
 
   /* Typography */
@@ -36,15 +37,6 @@
   --leading-display: 1;
   --tracking-display: 0px;
 
-  /* Spacing */
-  --spacing-5: 5px;
-  --spacing-10: 10px;
-  --spacing-12: 12px;
-  --spacing-15: 15px;
-  --spacing-20: 20px;
-  --spacing-22: 22px;
-  --spacing-48: 48px;
-
   /* Border Radius */
   --radius-sm: 1.5px;
   --radius-2xl: 20px;
@@ -60,12 +52,14 @@
   /* Shadows */
   --shadow-subtle: rgb(51, 51, 51) 5px -5px 0px 0px;
   --shadow-subtle-2: rgb(51, 51, 51) 4px -4px 0px 0px;
+  --shadow-blue-offset: rgb(129, 174, 217) 6px -6px 0px 0px;
+  --shadow-blue-offset-hover: rgb(85, 161, 234) 8px -8px 0px 0px;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-warm-paper);
+    background-color: var(--color-dusty-sky);
     color: var(--color-ink-black);
     font-family: var(--font-manrope);
     -webkit-font-smoothing: antialiased;
@@ -74,7 +68,7 @@
 
   body {
     margin: 0;
-    background-color: var(--color-warm-paper);
+    background-color: var(--color-dusty-sky);
     color: var(--color-ink-black);
     overflow-x: hidden;
   }
@@ -92,6 +86,7 @@
   letter-spacing: var(--tracking-display);
 }
 
+.font-editorial em,
 .font-editorial-italic {
   font-family: var(--font-simeiz);
   font-style: italic;
@@ -104,20 +99,12 @@
   letter-spacing: -0.036em;
 }
 
-/* Italic inside .font-editorial automatically uses Simeiz italic 400 */
-.font-editorial em,
-.font-editorial-italic {
-  font-family: var(--font-simeiz);
-  font-style: italic;
-  font-weight: 400;
-}
-
-/* Pasted-Paper Hard Offset Card */
+/* Reference-accurate Dusty-Sky Offset Hard-Shadow Cards */
 .sketch-card {
-  background-color: var(--color-pure-white);
+  background-color: #fbfbf9;
   border: 1.5px solid var(--color-dusty-sky);
-  border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-subtle);
+  border-radius: 26px;
+  box-shadow: var(--shadow-blue-offset);
   transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -128,92 +115,86 @@
 .sketch-card-interactive:hover {
   border-color: var(--color-cobalt-wash);
   transform: translate(-2px, 2px);
-  box-shadow: rgb(51, 51, 51) 7px -7px 0px 0px;
+  box-shadow: var(--shadow-blue-offset-hover);
 }
 
 .sketch-card-interactive:active {
   transform: translate(2px, -2px);
-  box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
+  box-shadow: rgb(129, 174, 217) 2px -2px 0px 0px;
 }
 
-/* Empty Add-Work Sketchbook Card */
+/* Open Folio Slot Card */
 .sketch-card-dashed,
 .sketch-slot-card {
-  background-color: var(--color-pure-white);
-  border: 1.5px dashed var(--color-dusty-sky);
-  border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-subtle);
+  background-color: #fbfbf9;
+  border: 1.5px solid var(--color-dusty-sky);
+  border-radius: 26px;
+  box-shadow: var(--shadow-blue-offset);
   transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .sketch-card-dashed:hover,
 .sketch-slot-card:hover {
   border-color: var(--color-cobalt-wash);
-  border-style: solid;
   transform: translate(-2px, 2px);
-  box-shadow: rgb(51, 51, 51) 7px -7px 0px 0px;
+  box-shadow: var(--shadow-blue-offset-hover);
 }
 
-/* Pill CTA Buttons */
+/* Giant Pill CTA matching Reference Image 1 (Dusty-Sky Hard Top-Right Offset) */
 .pill-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: var(--radius-full-6);
-  border: 1.5px solid var(--color-ink-black);
-  background-color: var(--color-pure-white);
+  border: 1.5px solid var(--color-dusty-sky);
+  background-color: #fbfbf9;
   color: var(--color-ink-black);
   font-family: var(--font-manrope);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  box-shadow: var(--shadow-subtle-2);
+  box-shadow: var(--shadow-blue-offset);
   cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
 .pill-cta:hover {
   border-color: var(--color-cobalt-wash);
+  background-color: var(--color-pure-white);
   transform: translate(-2px, 2px);
-  box-shadow: rgb(51, 51, 51) 6px -6px 0px 0px;
+  box-shadow: var(--shadow-blue-offset-hover);
 }
 
 .pill-cta:active {
   transform: translate(2px, -2px);
-  box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
+  box-shadow: rgb(129, 174, 217) 2px -2px 0px 0px;
 }
 
-/* Dusty Sky Filled Primary Pill Action (matches Agent Prompt Guide: primary action #81aed9) */
-.pill-cta-primary-blue {
+/* Circular Dark-Shadow Icon Trigger (Hamburger + Bottom-Left Social/Add Buttons in Ref Images 1-5) */
+.circle-ink-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border-radius: var(--radius-full-6);
+  border-radius: 9999px;
   border: 1.5px solid var(--color-ink-black);
-  background-color: var(--color-dusty-sky);
+  background-color: var(--color-pure-white);
   color: var(--color-ink-black);
-  font-family: var(--font-manrope);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   box-shadow: var(--shadow-subtle-2);
   cursor: pointer;
-  transition: background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
-.pill-cta-primary-blue:hover {
-  background-color: var(--color-cobalt-wash);
-  transform: translate(-2px, 2px);
-  box-shadow: rgb(51, 51, 51) 6px -6px 0px 0px;
+.circle-ink-btn:hover {
+  border-color: var(--color-cobalt-wash);
+  transform: translate(-1.5px, 1.5px);
+  box-shadow: rgb(51, 51, 51) 5.5px -5.5px 0px 0px;
 }
 
-.pill-cta-primary-blue:active {
-  transform: translate(2px, -2px);
+.circle-ink-btn:active {
+  transform: translate(1.5px, -1.5px);
   box-shadow: rgb(51, 51, 51) 2px -2px 0px 0px;
 }
 
@@ -226,14 +207,14 @@
   gap: 8px;
   border-radius: var(--radius-full-6);
   border: 1.5px solid var(--color-dusty-sky);
-  background-color: var(--color-pure-white);
+  background-color: #fbfbf9;
   color: var(--color-ink-black);
   font-family: var(--font-manrope);
   font-size: 13px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  padding: 10px 20px;
+  padding: 9px 18px;
   cursor: pointer;
   transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
@@ -246,7 +227,7 @@
 .sketch-pill-active,
 .pill-chip-active {
   border-color: var(--color-ink-black);
-  background-color: var(--color-dusty-sky);
+  background-color: var(--color-pure-white);
   box-shadow: var(--shadow-subtle-2);
 }
 
@@ -284,7 +265,7 @@
 }
 
 .sketch-input::placeholder {
-  color: var(--color-muted-placeholder);
+  color: #828282;
 }
 
 .sketch-input:focus {
@@ -300,5 +281,5 @@
 
 .sketch-card-interactive:hover .thumb-analog,
 .sketch-card-interactive:hover .sketch-photo-muted {
-  filter: grayscale(28%) contrast(1.05);
+  filter: grayscale(20%) contrast(1.05);
 }

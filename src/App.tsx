@@ -11,6 +11,7 @@ import { NavigationOverlay } from './components/NavigationOverlay';
 import { HeroSection } from './components/HeroSection';
 import { PortfolioSection } from './components/PortfolioSection';
 import { ExperienceSection } from './components/ExperienceSection';
+import { PrinciplesSection } from './components/PrinciplesSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WorkDetailModal } from './components/WorkDetailModal';
@@ -81,33 +82,38 @@ export function App() {
     : '01';
 
   return (
-    <div className="min-h-screen bg-warm-paper text-black">
-      <NavigationOverlay
-        isOpen={menuOpen}
-        onToggle={() => setMenuOpen((prev) => !prev)}
-        onClose={() => setMenuOpen(false)}
-        onOpenAddWork={handleOpenAddNew}
-      />
-
-      <main>
-        <HeroSection onOpenAddWork={handleOpenAddNew} />
-
-        <PortfolioSection
-          works={works}
-          hasCustomEdits={hasCustomEdits}
-          onSelectWork={setSelectedWork}
-          onEditWork={handleOpenEdit}
+    /* Signature Dusty-Sky Outer Page Frame matching Reference Images 1-5 */
+    <div className="min-h-screen bg-dusty-sky p-2 sm:p-3.5 md:p-4 text-black">
+      <div className="relative mx-auto max-w-[1380px] overflow-hidden rounded-[22px] bg-warm-paper sm:rounded-[30px]">
+        <NavigationOverlay
+          isOpen={menuOpen}
+          onToggle={() => setMenuOpen((prev) => !prev)}
+          onClose={() => setMenuOpen(false)}
           onOpenAddWork={handleOpenAddNew}
-          onExportJson={() => formatWorksAsJsonDownload(works)}
-          onResetDefaults={handleResetDefaults}
         />
 
-        <ExperienceSection onOpenAddWork={handleOpenAddNew} />
+        <main>
+          <HeroSection onOpenAddWork={handleOpenAddNew} />
 
-        <ContactSection />
-      </main>
+          <PortfolioSection
+            works={works}
+            hasCustomEdits={hasCustomEdits}
+            onSelectWork={setSelectedWork}
+            onEditWork={handleOpenEdit}
+            onOpenAddWork={handleOpenAddNew}
+            onExportJson={() => formatWorksAsJsonDownload(works)}
+            onResetDefaults={handleResetDefaults}
+          />
 
-      <Footer onOpenAddWork={handleOpenAddNew} />
+          <ExperienceSection onOpenAddWork={handleOpenAddNew} />
+
+          <PrinciplesSection onOpenAddWork={handleOpenAddNew} />
+
+          <ContactSection />
+        </main>
+
+        <Footer onOpenAddWork={handleOpenAddNew} />
+      </div>
 
       <WorkDetailModal
         work={selectedWork}

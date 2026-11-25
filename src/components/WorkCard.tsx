@@ -4,51 +4,24 @@ import type { PortfolioWork } from '../types/work';
 interface WorkCardProps {
   work: PortfolioWork;
   indexNumber: string;
+  variant: 'large' | 'compact';
   staggerClass?: string;
   onSelect: (work: PortfolioWork) => void;
   onEdit: (work: PortfolioWork) => void;
 }
 
-function renderMixedTitle(title: string, italicWord?: string) {
-  if (!italicWord || !title.includes(italicWord)) {
-    const words = title.split(' ');
-    if (words.length <= 1) return title;
-    const last = words.pop();
-    return (
-      <>
-        {words.join(' ')} <em>{last}</em>
-      </>
-    );
-  }
-  const idx = title.indexOf(italicWord);
-  const before = title.slice(0, idx);
-  const after = title.slice(idx + italicWord.length);
-  return (
-    <>
-      {before}
-      <em>{italicWord}</em>
-      {after}
-    </>
-  );
-}
-
 export const WorkCard: React.FC<WorkCardProps> = ({
   work,
   indexNumber,
+  variant,
   staggerClass = '',
   onSelect,
   onEdit,
 }) => {
-  return (
-    <article className={`relative md:pl-12 ${staggerClass}`}>
-      {/* Floating Section Index Marker left of card */}
-      <span
-        aria-hidden="true"
-        className="font-editorial mb-2 block text-[22px] leading-none text-black md:absolute md:top-10 md:left-0 md:mb-0"
-      >
-        {indexNumber}
-      </span>
+  const isLarge = variant === 'large';
 
+  return (
+    <article className={staggerClass}>
       <div
         onClick={() => onSelect(work)}
         onKeyDown={(e) => {
@@ -59,69 +32,81 @@ export const WorkCard: React.FC<WorkCardProps> = ({
         }}
         role="button"
         tabIndex={0}
-        className="sketch-card sketch-card-interactive cursor-pointer p-7 sm:p-[48px]"
+        className={`sketch-card sketch-card-interactive group cursor-pointer text-center ${
+          isLarge
+            ? 'w-full px-7 py-10 sm:px-12 sm:py-14'
+            : 'mx-auto w-full max-w-[300px] px-6 py-8 sm:px-8 sm:py-10'
+        }`}
       >
-        {/* Top Circular Thumbnail + Trophy Badge */}
-        <div className="mb-7 flex items-start justify-between gap-4">
-          <div className="relative inline-block">
-            <div className="h-[124px] w-[124px] overflow-hidden rounded-[120px] border-[1.5px] border-black/15 bg-warm-paper sm:h-[144px] sm:w-[144px]">
-              <img
-                src={work.imageUrl}
-                alt={work.title}
-                className={`h-full w-full object-cover ${
-                  work.keepColorInPreview ? '' : 'sketch-photo-muted'
-                }`}
-              />
-            </div>
-
-            {work.awardBadge && (
-              <span
-                title={work.awardLabel || 'Featured Graphic Design Work'}
-                className="absolute right-0 bottom-0 flex h-[30px] w-[30px] items-center justify-center rounded-[120px] border-[1.5px] border-black bg-white text-[14px] leading-none"
-              >
-                🏆
-              </span>
-            )}
+        {/* Centered Circular Thumbnail + Floating Trophy Badge */}
+        <div className="relative mx-auto inline-block">
+          <div
+            className={`overflow-hidden rounded-full bg-warm-paper ${
+              isLarge
+                ? 'h-[190px] w-[190px] sm:h-[240px] sm:w-[240px]'
+                : 'h-[116px] w-[116px] sm:h-[132px] sm:w-[132px]'
+            }`}
+          >
+            <img
+              src={work.imageUrl}
+              alt={work.title}
+              className={`h-full w-full object-cover ${
+                work.keepColorInPreview ? '' : 'sketch-photo-muted'
+              }`}
+            />
           </div>
 
-          <div className="flex flex-col items-end gap-2 text-right">
-            <span className="rounded-[3000px] border-[1.5px] border-dusty-sky bg-warm-paper px-3 py-1 font-ui text-[12px] text-charcoal">
-              {work.category}
+          {work.awardBadge && (
+            <span
+              title={work.awardLabel || 'Featured Graphic Design Piece'}
+              className={`absolute right-0 bottom-1 flex items-center justify-center rounded-full border border-black/15 bg-white leading-none shadow-sm ${
+                isLarge ? 'h-[40px] w-[40px] text-[18px]' : 'h-[30px] w-[30px] text-[14px]'
+              }`}
+            >
+              🏆
             </span>
-            <span className="font-ui text-[12px] text-charcoal">
-              {work.year} · {work.isPlaceholder ? 'Dummy Work' : 'Live Project'}
-            </span>
-          </div>
+          )}
         </div>
 
-        {/* Heading in Simeiz 30px */}
-        <h3 className="font-editorial text-[26px] leading-[1.33] text-black sm:text-[30px]">
-          {renderMixedTitle(work.title, work.italicWord)}
-        </h3>
-
-        {/* Client / Role Subtitle */}
-        <p className="mt-1 font-ui text-[12px] text-charcoal/80">
-          ({work.client} — {work.role})
+        {/* Centered Italic Index Marker (01, 02...) matching Reference Images 2 & 3 */}
+        <p className="font-editorial-italic mt-6 text-[13px] text-charcoal">
+          {indexNumber}
         </p>
 
-        {/* Short Description in Manrope 14px */}
-        <p className="mt-4 font-ui text-[14px] leading-[1.5] text-charcoal">
+        {/* Centered Project Title in Simeiz */}
+        <h3
+          className={`font-editorial mt-1.5 leading-[1.12] text-black ${
+            isLarge ? 'text-[32px] sm:text-[42px]' : 'text-[24px] sm:text-[28px]'
+          }`}
+        >
+          {work.title}
+        </h3>
+
+        {/* Centered Short Description in Manrope */}
+        <p
+          className={`mx-auto mt-3 font-ui text-[#333333] ${
+            isLarge
+              ? 'max-w-[360px] text-[14px] leading-[1.45]'
+              : 'max-w-[230px] text-[12px] sm:text-[13px] leading-[1.4]'
+          }`}
+        >
           {work.summary}
         </p>
 
-        {/* Inline Coral Links */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-5 font-ui text-[14px]">
-          <span className="coral-inline-link">view case study →</span>
-
+        {/* Subtle Placeholder Badge + Inline Coral Edit Action */}
+        <div className="mt-5 flex items-center justify-center gap-4 text-[12px] font-ui">
+          <span className="text-charcoal/70">
+            {work.category} · {work.isPlaceholder ? 'Placeholder' : work.year}
+          </span>
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               onEdit(work);
             }}
-            className="coral-inline-link bg-transparent p-0 font-ui text-[13px]"
+            className="coral-inline-link bg-transparent p-0 font-ui text-[12px]"
           >
-            {work.isPlaceholder ? 'replace placeholder' : 'edit work'}
+            {work.isPlaceholder ? 'replace' : 'edit'}
           </button>
         </div>
       </div>

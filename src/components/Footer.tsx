@@ -7,7 +7,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenAddWork }) => {
   return (
-    <footer className="mx-auto max-w-[1200px] px-6 pt-6 pb-16 md:px-10">
+    <footer className="mx-auto max-w-[1180px] px-6 pt-6 pb-14 sm:px-10">
       <div className="flex flex-col justify-between gap-6 border-t border-black/15 pt-8 sm:flex-row sm:items-center">
         <div>
           <p className="font-editorial text-[24px] leading-tight text-black">
@@ -24,7 +24,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAddWork }) => {
             works
           </a>
           <a href="#experience" className="coral-inline-link">
-            experience
+            craft
+          </a>
+          <a href="#principles" className="coral-inline-link">
+            principles
           </a>
           <button
             type="button"

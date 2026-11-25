@@ -33,69 +33,53 @@ export const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
 
   return (
     <>
-      <header className="relative z-30 mx-auto flex max-w-[1200px] items-center justify-between px-6 pt-7 pb-4 md:px-10">
-        <a
-          href="#top"
-          className="font-ui text-[14px] text-charcoal transition-opacity hover:opacity-75"
+      {/* Minimal Floating Top-Right Circular Hamburger Trigger matching Reference Images 1-5 */}
+      <div className="fixed top-6 right-6 z-40 sm:top-9 sm:right-10">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isOpen}
+          className="circle-ink-btn h-[46px] w-[46px] flex-col gap-[4.5px]"
         >
-          ({DESIGNER_PROFILE.fullName} — {DESIGNER_PROFILE.role} · 2 Yrs Exp.)
-        </a>
-
-        <div className="flex items-center gap-4">
-          <button
-            type="button"
-            onClick={onOpenAddWork}
-            className="coral-inline-link hidden font-ui text-[14px] sm:inline-block"
-          >
-            + add work
-          </button>
-
-          <button
-            type="button"
-            onClick={onToggle}
-            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={isOpen}
-            className="flex h-[42px] w-[42px] cursor-pointer flex-col items-center justify-center gap-[5px] rounded-[3000px] border-[1.5px] border-black bg-white shadow-[4px_-4px_0px_0px_#333333] transition-transform hover:-translate-x-[1px] hover:translate-y-[1px]"
-          >
-            <span className="block h-[1.5px] w-4 bg-black" />
-            <span className="block h-[1.5px] w-4 bg-black" />
-            <span className="block h-[1.5px] w-4 bg-black" />
-          </button>
-        </div>
-      </header>
+          <span className="block h-[1.5px] w-[18px] bg-black" />
+          <span className="block h-[1.5px] w-[13px] -translate-x-[2px] bg-black" />
+          <span className="block h-[1.5px] w-[16px] translate-x-[1px] bg-black" />
+        </button>
+      </div>
 
       {isOpen && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="fixed inset-0 z-50 flex flex-col justify-between overflow-y-auto bg-warm-paper px-6 py-7 md:px-10"
+          className="fixed inset-0 z-50 flex flex-col justify-between overflow-y-auto bg-warm-paper px-6 py-7 md:px-12"
         >
-          <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between">
+          <div className="mx-auto flex w-full max-w-[1160px] items-center justify-between">
             <span className="font-ui text-[14px] text-charcoal">
-              ({DESIGNER_PROFILE.shortMark} — Portfolio Index)
+              ({DESIGNER_PROFILE.fullName} — {DESIGNER_PROFILE.role} · 2 Years Experience)
             </span>
 
             <button
               type="button"
               onClick={onClose}
               aria-label="Close navigation menu"
-              className="flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-[3000px] border-[1.5px] border-black bg-white font-ui text-[18px] leading-none text-black shadow-[4px_-4px_0px_0px_#333333] transition-transform hover:-translate-x-[1px] hover:translate-y-[1px]"
+              className="circle-ink-btn h-[46px] w-[46px] font-ui text-[20px] leading-none"
             >
               ×
             </button>
           </div>
 
-          <nav className="mx-auto my-auto w-full max-w-[1200px] py-10">
+          <nav className="mx-auto my-auto w-full max-w-[1160px] py-10">
             <ul className="space-y-6 md:space-y-8">
               <li className="group flex items-baseline gap-5">
                 <span className="font-editorial text-[22px] text-charcoal">01</span>
                 <button
                   type="button"
                   onClick={() => navigateTo('work')}
-                  className="font-editorial cursor-pointer text-left text-[42px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
+                  className="font-editorial cursor-pointer text-left text-[40px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
                 >
-                  Selected <em>works</em>
+                  My selected <em>works</em>
                 </button>
               </li>
 
@@ -103,13 +87,10 @@ export const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
                 <span className="font-editorial text-[22px] text-charcoal">02</span>
                 <button
                   type="button"
-                  onClick={() => {
-                    onClose();
-                    onOpenAddWork();
-                  }}
-                  className="font-editorial cursor-pointer text-left text-[42px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
+                  onClick={() => navigateTo('experience')}
+                  className="font-editorial cursor-pointer text-left text-[40px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
                 >
-                  Add <em>new</em> work
+                  Experience &amp; <em>craft</em>
                 </button>
               </li>
 
@@ -117,10 +98,10 @@ export const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
                 <span className="font-editorial text-[22px] text-charcoal">03</span>
                 <button
                   type="button"
-                  onClick={() => navigateTo('experience')}
-                  className="font-editorial cursor-pointer text-left text-[42px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
+                  onClick={() => navigateTo('principles')}
+                  className="font-editorial cursor-pointer text-left text-[40px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
                 >
-                  Two years of <em>craft</em>
+                  Principles &amp; <em>guidelines</em>
                 </button>
               </li>
 
@@ -129,9 +110,23 @@ export const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
                 <button
                   type="button"
                   onClick={() => navigateTo('contact')}
-                  className="font-editorial cursor-pointer text-left text-[42px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
+                  className="font-editorial cursor-pointer text-left text-[40px] leading-none text-black transition-opacity hover:opacity-70 md:text-[64px]"
                 >
                   Say <em>hello</em>
+                </button>
+              </li>
+
+              <li className="group flex items-baseline gap-5 pt-2">
+                <span className="font-editorial text-[22px] text-coral-link">+</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenAddWork();
+                  }}
+                  className="font-editorial cursor-pointer text-left text-[34px] leading-none text-black transition-opacity hover:opacity-70 md:text-[52px]"
+                >
+                  Add <em>new work</em> to folio
                 </button>
               </li>
             </ul>
@@ -139,7 +134,7 @@ export const NavigationOverlay: React.FC<NavigationOverlayProps> = ({
             <HeroUnderlineCurve className="mt-8 w-[240px]" />
           </nav>
 
-          <div className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-4 border-t border-black/15 pt-6">
+          <div className="mx-auto flex w-full max-w-[1160px] flex-wrap items-center justify-between gap-4 border-t border-black/15 pt-6">
             <span className="font-ui text-[14px] text-charcoal">
               ({DESIGNER_PROFILE.availability})
             </span>
