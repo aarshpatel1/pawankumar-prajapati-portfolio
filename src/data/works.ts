@@ -8,7 +8,7 @@ export const DESIGNER_PROFILE = {
   experienceHeadline: '2 years of experience',
   location: 'India · Working Worldwide',
   availability: 'Open for freelance branding, packaging & editorial commissions',
-  portraitUrl: '/images/avatar-pawan.jpg',
+  portraitUrl: '/images/profile.jpg',
   email: 'hello@pawankumarprajapati.design',
   socials: [
     { label: 'Behance', url: 'https://www.behance.net/' },

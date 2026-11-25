@@ -73,7 +73,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
         className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] transition-transform duration-150 ease-out lg:block"
       >
         <img
-          src="/images/avatar-pawan-blue.jpg"
+          src="/images/pawan-blue.jpg"
           alt="Editorial studio portrait of Pawankumar Prajapati"
           className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent_0%,black_32%,black_100%)]"
         />
@@ -117,7 +117,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
           {/* Mobile portrait */}
           <div className="mt-4 overflow-hidden rounded-[24px] lg:hidden">
             <img
-              src="/images/avatar-pawan-blue.jpg"
+              src="/images/pawan-blue.jpg"
               alt="Editorial studio portrait of Pawankumar Prajapati"
               className="h-[340px] w-full object-cover object-top"
             />
